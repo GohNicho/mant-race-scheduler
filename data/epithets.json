@@ -1,0 +1,569 @@
+[
+  {
+    "id": "lady",
+    "name": "Lady",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Oka Sho"
+      },
+      {
+        "name": "Japanese Oaks"
+      },
+      {
+        "name": "Shuka Sho"
+      }
+    ]
+  },
+  {
+    "id": "heroine",
+    "name": "Heroine",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Oka Sho"
+      },
+      {
+        "name": "Japanese Oaks"
+      },
+      {
+        "name": "Shuka Sho"
+      },
+      {
+        "name": "Queen Elizabeth II Cup",
+        "year": 2
+      }
+    ]
+  },
+  {
+    "id": "goddess",
+    "name": "Goddess",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Oka Sho"
+      },
+      {
+        "name": "Japanese Oaks"
+      },
+      {
+        "name": "Shuka Sho"
+      },
+      {
+        "name": "Victoria Mile"
+      },
+      {
+        "name": "Hanshin Juvenile Fillies"
+      },
+      {
+        "name": "Queen Elizabeth II Cup",
+        "year": 2
+      },
+      {
+        "name": "Queen Elizabeth II Cup",
+        "year": 3
+      }
+    ]
+  },
+  {
+    "id": "mile_a_minute",
+    "name": "Mile a Minute",
+    "reward": "Mile Straightaways Hint +1",
+    "requirement_type": "specific_races_any",
+    "required_races": [
+      {
+        "name": "Oka Sho"
+      },
+      {
+        "name": "NHK Mile Cup"
+      },
+      {
+        "name": "Victoria Mile"
+      },
+      {
+        "name": "Yasuda Kinen"
+      },
+      {
+        "name": "Mile Championship"
+      }
+    ],
+    "additional_any": {
+      "pick": 1,
+      "from": [
+        {
+          "name": "Hanshin Juvenile Fillies"
+        },
+        {
+          "name": "Asahi Hai Futurity Stakes"
+        }
+      ]
+    }
+  },
+  {
+    "id": "stunning",
+    "name": "Stunning",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Satsuki Sho"
+      },
+      {
+        "name": "Tokyo Yushun (Japanese Derby)"
+      },
+      {
+        "name": "Kikuka Sho"
+      }
+    ]
+  },
+  {
+    "id": "incredible",
+    "name": "Incredible",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "specific_races_any",
+    "required_races": [
+      {
+        "name": "Satsuki Sho"
+      },
+      {
+        "name": "Tokyo Yushun (Japanese Derby)"
+      },
+      {
+        "name": "Kikuka Sho"
+      }
+    ],
+    "additional_any": {
+      "pick": 1,
+      "from": [
+        {
+          "name": "Japan Cup",
+          "year": 2
+        },
+        {
+          "name": "Arima Kinen",
+          "year": 2
+        }
+      ]
+    }
+  },
+  {
+    "id": "phenomenal",
+    "name": "Phenomenal",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "specific_races_any",
+    "required_races": [
+      {
+        "name": "Satsuki Sho"
+      },
+      {
+        "name": "Tokyo Yushun (Japanese Derby)"
+      },
+      {
+        "name": "Kikuka Sho"
+      }
+    ],
+    "additional_any": {
+      "pick": 2,
+      "from": [
+        {
+          "name": "Tenno Sho (Spring)"
+        },
+        {
+          "name": "Takarazuka Kinen"
+        },
+        {
+          "name": "Japan Cup"
+        },
+        {
+          "name": "Tenno Sho (Autumn)"
+        },
+        {
+          "name": "Osaka Hai"
+        },
+        {
+          "name": "Arima Kinen"
+        }
+      ]
+    }
+  },
+  {
+    "id": "breakneck_miler",
+    "name": "Breakneck Miler",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "NHK Mile Cup"
+      },
+      {
+        "name": "Yasuda Kinen"
+      },
+      {
+        "name": "Mile Championship"
+      }
+    ]
+  },
+  {
+    "id": "sprint_go_getter",
+    "name": "Sprint Go-Getter",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Takamatsunomiya Kinen"
+      },
+      {
+        "name": "Sprinters Stakes"
+      }
+    ]
+  },
+  {
+    "id": "sprint_speedster",
+    "name": "Sprint Speedster",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Takamatsunomiya Kinen"
+      },
+      {
+        "name": "Sprinters Stakes"
+      },
+      {
+        "name": "Yasuda Kinen"
+      },
+      {
+        "name": "Mile Championship"
+      }
+    ]
+  },
+  {
+    "id": "spring_champion",
+    "name": "Spring Champion",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Osaka Hai"
+      },
+      {
+        "name": "Tenno Sho (Spring)"
+      },
+      {
+        "name": "Takarazuka Kinen"
+      }
+    ]
+  },
+  {
+    "id": "fall_champion",
+    "name": "Fall Champion",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Tenno Sho (Autumn)"
+      },
+      {
+        "name": "Japan Cup",
+        "year": 3
+      },
+      {
+        "name": "Arima Kinen",
+        "year": 3
+      }
+    ]
+  },
+  {
+    "id": "shield_bearer",
+    "name": "Shield Bearer",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Tenno Sho (Spring)"
+      },
+      {
+        "name": "Tenno Sho (Autumn)"
+      }
+    ]
+  },
+  {
+    "id": "legendary",
+    "name": "Legendary",
+    "reward": "Homestretch Haste Hint +1",
+    "requirement_type": "compound",
+    "requires_any_of": [
+      {
+        "label": "Lady or Stunning",
+        "options": [
+          [
+            {
+              "name": "Oka Sho"
+            },
+            {
+              "name": "Japanese Oaks"
+            },
+            {
+              "name": "Shuka Sho"
+            }
+          ],
+          [
+            {
+              "name": "Satsuki Sho"
+            },
+            {
+              "name": "Tokyo Yushun (Japanese Derby)"
+            },
+            {
+              "name": "Kikuka Sho"
+            }
+          ]
+        ]
+      }
+    ],
+    "requires_all": [
+      {
+        "name": "Osaka Hai"
+      },
+      {
+        "name": "Tenno Sho (Spring)"
+      },
+      {
+        "name": "Takarazuka Kinen"
+      },
+      {
+        "name": "Tenno Sho (Autumn)"
+      },
+      {
+        "name": "Japan Cup",
+        "year": 3
+      },
+      {
+        "name": "Arima Kinen",
+        "year": 3
+      }
+    ]
+  },
+  {
+    "id": "dirty_work",
+    "name": "Dirty Work",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "terrain_count",
+    "terrain": "Dirt",
+    "required_count": 5
+  },
+  {
+    "id": "playing_dirty",
+    "name": "Playing Dirty",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "terrain_count",
+    "terrain": "Dirt",
+    "required_count": 10
+  },
+  {
+    "id": "eat_my_dust",
+    "name": "Eat My Dust",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "terrain_count",
+    "terrain": "Dirt",
+    "required_count": 15
+  },
+  {
+    "id": "dirt_g1_achiever",
+    "name": "Dirt G1 Achiever",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "terrain_grade_count",
+    "terrain": "Dirt",
+    "grade": "G1",
+    "required_count": 3
+  },
+  {
+    "id": "dirt_g1_star",
+    "name": "Dirt G1 Star",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "terrain_grade_count",
+    "terrain": "Dirt",
+    "grade": "G1",
+    "required_count": 4
+  },
+  {
+    "id": "dirt_g1_powerhouse",
+    "name": "Dirt G1 Powerhouse",
+    "reward": "2 Random Stats +15",
+    "requirement_type": "terrain_grade_count",
+    "terrain": "Dirt",
+    "grade": "G1",
+    "required_count": 5
+  },
+  {
+    "id": "dirt_g1_dominator",
+    "name": "Dirt G1 Dominator",
+    "reward": "Top Pick Hint +1",
+    "requirement_type": "terrain_grade_count",
+    "terrain": "Dirt",
+    "grade": "G1",
+    "required_count": 9
+  },
+  {
+    "id": "dirt_sprinter",
+    "name": "Dirt Sprinter",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "JBC Sprint",
+        "year": 2
+      },
+      {
+        "name": "JBC Sprint",
+        "year": 3
+      }
+    ]
+  },
+  {
+    "id": "kicking_up_dust",
+    "name": "Kicking Up Dust",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "specific_races",
+    "required_races": [
+      {
+        "name": "Unicorn Stakes"
+      },
+      {
+        "name": "Leopard Stakes"
+      },
+      {
+        "name": "Japan Dirt Derby"
+      }
+    ]
+  },
+  {
+    "id": "pro_racer",
+    "name": "Pro Racer",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "grade_count",
+    "min_grade": "OP",
+    "required_count": 10
+  },
+  {
+    "id": "standard_distance_leader",
+    "name": "Standard Distance Leader",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "distance_type_count",
+    "distance_type": "standard",
+    "required_count": 10,
+    "notes": "Standard distances: 1200, 1400, 1600, 1800, 2000, 2400, 2500, 3200m"
+  },
+  {
+    "id": "non_standard_distance_leader",
+    "name": "Non-Standard Distance Leader",
+    "reward": "2 Random Stats +10",
+    "requirement_type": "distance_type_count",
+    "distance_type": "non-standard",
+    "required_count": 10,
+    "notes": "Non-standard distances: anything not in the standard list"
+  },
+  {
+    "id": "kanto_conqueror",
+    "name": "Kanto Conqueror",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "region_count",
+    "region": "Kanto",
+    "tracks": [
+      "Tokyo",
+      "Nakayama",
+      "Ooi"
+    ],
+    "required_count": 3
+  },
+  {
+    "id": "west_japan_whiz",
+    "name": "West Japan Whiz",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "region_count",
+    "region": "Kansai",
+    "tracks": [
+      "Chukyo",
+      "Hanshin",
+      "Kyoto"
+    ],
+    "required_count": 3
+  },
+  {
+    "id": "hokkaido_hotshot",
+    "name": "Hokkaido Hotshot",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "region_count",
+    "region": "Hokkaido",
+    "tracks": [
+      "Sapporo",
+      "Hakodate"
+    ],
+    "required_count": 3
+  },
+  {
+    "id": "tohoku_top_dog",
+    "name": "Tohoku Top Dog",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "region_count",
+    "region": "Tohoku",
+    "tracks": [
+      "Fukushima",
+      "Niigata"
+    ],
+    "required_count": 3
+  },
+  {
+    "id": "kokura_constable",
+    "name": "Kokura Constable",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "region_count",
+    "region": "Kokura",
+    "tracks": [
+      "Kokura"
+    ],
+    "required_count": 2
+  },
+  {
+    "id": "junior_jewel",
+    "name": "Junior Jewel",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "name_pattern_count",
+    "pattern": "Junior Stakes",
+    "required_count": 3
+  },
+  {
+    "id": "umatastic",
+    "name": "Umatastic",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "name_pattern_count",
+    "pattern": "Umamusume Stakes",
+    "required_count": 3
+  },
+  {
+    "id": "globe_trotter",
+    "name": "Globe-Trotter",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "name_pattern_count",
+    "pattern_type": "country_in_name",
+    "required_count": 3,
+    "notes": "Races with a country in the name"
+  },
+  {
+    "id": "turf_tussler",
+    "name": "Turf Tussler",
+    "reward": "2 Random Stats +5",
+    "requirement_type": "turf_all_distances",
+    "terrain": "Turf",
+    "required_distance_categories": [
+      "Sprint",
+      "Mile",
+      "Medium",
+      "Long"
+    ],
+    "notes": "Win a Sprint, Mile, Medium, and Long Turf Race"
+  }
+]

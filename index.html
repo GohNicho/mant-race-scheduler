@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MANT Race Planner</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <h1>MANT Race Planner</h1>
+    <p class="subtitle">Plan your MANT race schedule and track epithet progress</p>
+  </header>
+
+  <main>
+    <section id="schedule-section">
+      <div class="section-header">
+        <h2>Race Schedule</h2>
+        <div class="actions">
+          <div class="aptitude-filters">
+            <span class="aptitude-label">Distance:</span>
+            <label class="apt-cb"><input type="checkbox" data-apt="distance" value="Sprint"> Sprint</label>
+            <label class="apt-cb"><input type="checkbox" data-apt="distance" value="Mile" checked> Mile</label>
+            <label class="apt-cb"><input type="checkbox" data-apt="distance" value="Medium" checked> Medium</label>
+            <label class="apt-cb"><input type="checkbox" data-apt="distance" value="Long" checked> Long</label>
+            <span class="aptitude-divider">|</span>
+            <span class="aptitude-label">Terrain:</span>
+            <label class="apt-cb"><input type="checkbox" data-apt="terrain" value="Turf" checked> Turf</label>
+            <label class="apt-cb"><input type="checkbox" data-apt="terrain" value="Dirt"> Dirt</label>
+          </div>
+          <button id="btn-clear" class="btn btn-secondary">Clear All</button>
+          <button id="btn-experimental" class="btn btn-secondary">Experimental ▸</button>
+        </div>
+      </div>
+
+      <div id="experimental-panel" class="experimental-panel" hidden>
+        <div class="experimental-content">
+          <span class="experimental-label">Schedule CSV:</span>
+          <button id="btn-import" class="btn btn-secondary">Import</button>
+          <button id="btn-export" class="btn btn-secondary">Export</button>
+          <input type="file" id="import-file" accept=".json" hidden>
+        </div>
+        <div class="experimental-content">
+          <span class="experimental-label">Optimize for:</span>
+          <span class="help-wrapper"><span class="help-icon">?</span><span class="warn-tooltip help-tooltip">Replaces races with the selected distance category where possible, without reducing earned epithets or race grade. Useful for farming distance specific skill hints.</span></span>
+          <button class="btn btn-secondary btn-optimize" data-distance="Sprint">Sprint</button>
+          <button class="btn btn-secondary btn-optimize" data-distance="Mile">Mile</button>
+          <button class="btn btn-secondary btn-optimize" data-distance="Medium">Medium</button>
+          <button class="btn btn-secondary btn-optimize" data-distance="Long">Long</button>
+          <span id="optimize-status" class="optimize-status"></span>
+        </div>
+        <div class="experimental-content">
+          <span class="experimental-label">Save to browser</span>
+          <span class="help-wrapper"><span class="help-icon">?</span><span class="warn-tooltip help-tooltip">Saves your current schedule to browser storage. It will be restored on your next visit instead of the default.</span></span>
+          <input type="checkbox" id="persist-toggle" class="persist-cb">
+        </div>
+      </div>
+
+      <div id="schedule-grid">
+        <!-- Populated by JS: one year tab/section per year -->
+      </div>
+    </section>
+
+    <section id="epithets-section">
+      <h2>Epithet Tracker</h2>
+      <div id="epithet-list"></div>
+    </section>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/epithets.js"></script>
+  <script src="js/optimizer.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

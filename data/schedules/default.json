@@ -1,0 +1,114 @@
+{
+  "name": "Default",
+  "aptitudes": {
+    "distances": [
+      "Mile",
+      "Medium",
+      "Long"
+    ],
+    "terrains": [
+      "Turf"
+    ]
+  },
+  "slots": {
+    "junior-aug-late": {
+      "raceId": 304901
+    },
+    "junior-sep-early": {
+      "raceId": 305101
+    },
+    "junior-oct-early": {
+      "raceId": 305701
+    },
+    "junior-oct-late": {
+      "raceId": 305901
+    },
+    "junior-nov-late": {
+      "raceId": 306501
+    },
+    "junior-dec-early": {
+      "raceId": 102201
+    },
+    "junior-dec-late": {
+      "raceId": 102401
+    },
+    "classic-feb-early": {
+      "raceId": 301201
+    },
+    "classic-mar-late": {
+      "raceId": 201001
+    },
+    "classic-apr-early": {
+      "raceId": 100501
+    },
+    "classic-may-early": {
+      "raceId": 100701
+    },
+    "classic-may-late": {
+      "raceId": 101001
+    },
+    "classic-jun-late": {
+      "raceId": 101201
+    },
+    "classic-sep-early": {
+      "raceId": 305301
+    },
+    "classic-sep-late": {
+      "raceId": 202501
+    },
+    "classic-oct-late": {
+      "raceId": 101501
+    },
+    "classic-nov-early": {
+      "raceId": 101701
+    },
+    "classic-nov-late": {
+      "raceId": 101801
+    },
+    "classic-dec-late": {
+      "raceId": 102301
+    },
+    "senior-jan-late": {
+      "raceId": 200301
+    },
+    "senior-feb-early": {
+      "raceId": 200401
+    },
+    "senior-mar-early": {
+      "raceId": 200701
+    },
+    "senior-mar-late": {
+      "raceId": 100301
+    },
+    "senior-apr-late": {
+      "raceId": 100601
+    },
+    "senior-may-early": {
+      "raceId": 100801
+    },
+    "senior-jun-early": {
+      "raceId": 101101
+    },
+    "senior-jun-late": {
+      "raceId": 101201
+    },
+    "senior-sep-early": {
+      "raceId": 305301
+    },
+    "senior-sep-late": {
+      "raceId": 202501
+    },
+    "senior-oct-late": {
+      "raceId": 101601
+    },
+    "senior-nov-early": {
+      "raceId": 101701
+    },
+    "senior-nov-late": {
+      "raceId": 101901
+    },
+    "senior-dec-late": {
+      "raceId": 102301
+    }
+  }
+}
