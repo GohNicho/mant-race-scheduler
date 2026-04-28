@@ -59,6 +59,14 @@ const App = (() => {
     Config.saveToStorage(config);
   }
 
+  function createSummaryBox(id) {
+    const box = document.createElement("div");
+    box.id = id;
+    box.className = "schedule-summary";
+    box.innerHTML = '<div class="summary-title">Schedule Summary</div><div class="summary-body">—</div>';
+    return box;
+  }
+
   function renderSchedule() {
     const container = document.getElementById("schedule-grid");
     const slots = Data.getAllSlots();
@@ -88,16 +96,17 @@ const App = (() => {
 
       // Add summary box to Junior column (it has fewer slots)
       if (y === 1) {
-        const summaryBox = document.createElement("div");
-        summaryBox.id = "schedule-summary";
-        summaryBox.className = "schedule-summary";
-        summaryBox.innerHTML = '<div class="summary-title">Schedule Summary</div><div class="summary-body">—</div>';
-        col.appendChild(summaryBox);
+        col.appendChild(createSummaryBox("schedule-summary"));
       }
 
       columnsDiv.appendChild(col);
     }
+
+    // Duplicate summary for mobile (shown after all columns)
+    const mobileSummary = createSummaryBox("schedule-summary-mobile");
+
     container.appendChild(columnsDiv);
+    container.appendChild(mobileSummary);
     updateConsecutiveWarnings();
     updateAptitudeWarnings();
     evaluateAndRender();
@@ -373,56 +382,120 @@ const App = (() => {
     lastResults = EpithetEngine.evaluate(selected, skipped, epithets);
     renderEpithets(lastResults);
     updateSummary(selected, lastResults);
+    updateCrucialRaces();
+  }
+
+  /** Find and highlight races that can't be skipped without losing an earned epithet. */
+  function updateCrucialRaces() {
+    // Clear all existing crucial markers
+    document.querySelectorAll(".timeslot").forEach(row => {
+      row.classList.remove("crucial-race");
+      const icon = row.querySelector(".crucial-icon");
+      if (icon) icon.remove();
+    });
+
+    const toggle = document.getElementById("crucial-toggle");
+    if (!toggle || !toggle.checked) return;
+    if (!lastResults) return;
+
+    const epithets = Data.getEpithets();
+    const currentEarned = lastResults.filter(r => r.status === "earned").length;
+
+    // For each active (non-skipped) race, simulate skipping it
+    const activeSlotKeys = Object.keys(schedule).filter(k => {
+      const entry = schedule[k];
+      return entry && entry.raceId && !entry.skipped;
+    });
+
+    const crucialSlots = new Set();
+
+    for (const slotKey of activeSlotKeys) {
+      // Temporarily mark as skipped
+      schedule[slotKey].skipped = true;
+
+      const { selected, skipped } = getSelectedAndSkipped();
+      const results = EpithetEngine.evaluate(selected, skipped, epithets);
+      const testEarned = results.filter(r => r.status === "earned").length;
+
+      if (testEarned < currentEarned) {
+        crucialSlots.add(slotKey);
+      }
+
+      // Restore
+      schedule[slotKey].skipped = false;
+    }
+
+    // Apply visual indicator
+    for (const slotKey of crucialSlots) {
+      const row = document.querySelector(`.timeslot[data-slot-key="${slotKey}"]`);
+      if (row) {
+        row.classList.add("crucial-race");
+        const icon = document.createElement("span");
+        icon.className = "crucial-icon";
+        icon.textContent = "\uD83D\uDD12";
+        icon.title = "Crucial: skipping this race would lose an earned epithet";
+        row.appendChild(icon);
+      }
+    }
   }
 
   /** Update the summary box in the Junior column. */
   function updateSummary(selectedRaces, results) {
-    const body = document.querySelector("#schedule-summary .summary-body");
-    if (!body) return;
-
     const earned = results.filter(r => r.status === "earned");
     const totalRaces = selectedRaces.length;
 
     // Aggregate rewards from earned epithets
-    const rewards = [];
     let totalStatBonus = 0;
     const hints = [];
 
     for (const r of earned) {
       const reward = r.epithet.reward;
-      // Parse "2 Random Stats +N" pattern
       const statMatch = reward.match(/(\d+)\s*Random Stats?\s*\+(\d+)/i);
       if (statMatch) {
-        const count = parseInt(statMatch[1]);
-        const value = parseInt(statMatch[2]);
-        totalStatBonus += count * value;
+        totalStatBonus += parseInt(statMatch[1]) * parseInt(statMatch[2]);
       }
-      // Collect hint rewards
       if (reward.toLowerCase().includes("hint")) {
         hints.push(reward);
       }
     }
 
-    let html = "";
-    html += '<div class="summary-row"><span class="summary-label">Races scheduled</span><span class="summary-value">' + totalRaces + '</span></div>';
-    html += '<div class="summary-row"><span class="summary-label">Total stat bonus</span><span class="summary-value highlight">+' + totalStatBonus + '</span></div>';
+    // Build base HTML (without the details open attribute — added per target)
+    let baseHtml = "";
+    baseHtml += '<div class="summary-row"><span class="summary-label">Races scheduled</span><span class="summary-value">' + totalRaces + '</span></div>';
+    baseHtml += '<div class="summary-row"><span class="summary-label">Total stat bonus</span><span class="summary-value highlight">+' + totalStatBonus + '</span></div>';
 
     if (hints.length > 0) {
       for (const h of hints) {
-        html += '<div class="summary-row"><span class="summary-label">Skill hint</span><span class="summary-value hint-value">' + h + '</span></div>';
+        baseHtml += '<div class="summary-row"><span class="summary-label">Skill hint</span><span class="summary-value hint-value">' + h + '</span></div>';
       }
     }
 
+    let earnedListHtml = "";
     if (earned.length > 0) {
-      html += '<details class="summary-earned-details"><summary class="summary-earned-toggle">' + earned.length + ' epithets earned</summary>';
-      html += '<div class="summary-earned-list">';
+      earnedListHtml += '<div class="summary-earned-list">';
       for (const r of earned) {
-        html += '<div class="summary-earned-item">' + r.epithet.name + ' <span class="summary-reward">' + r.epithet.reward + '</span></div>';
+        earnedListHtml += '<div class="summary-earned-item">' + r.epithet.name + ' <span class="summary-reward">' + r.epithet.reward + '</span></div>';
       }
-      html += '</div></details>';
+      earnedListHtml += '</div></details>';
     }
 
-    body.innerHTML = html;
+    // Update each summary independently, preserving its own open state
+    const targets = ["#schedule-summary", "#schedule-summary-mobile"];
+    for (const selector of targets) {
+      const body = document.querySelector(selector + " .summary-body");
+      if (!body) continue;
+
+      const existing = body.querySelector(".summary-earned-details");
+      const wasOpen = existing && existing.open;
+
+      let html = baseHtml;
+      if (earned.length > 0) {
+        const openAttr = wasOpen ? " open" : "";
+        html += '<details class="summary-earned-details"' + openAttr + '><summary class="summary-earned-toggle">' + earned.length + ' epithets earned</summary>';
+        html += earnedListHtml;
+      }
+      body.innerHTML = html;
+    }
   }
 
   // --- Epithet Rendering ---
@@ -567,6 +640,11 @@ const App = (() => {
       } else {
         Config.clearStorage();
       }
+    });
+
+    // Crucial races toggle
+    document.getElementById("crucial-toggle").addEventListener("change", () => {
+      updateCrucialRaces();
     });
 
     // Export current schedule as JSON file

@@ -29,7 +29,7 @@
             <label class="apt-cb"><input type="checkbox" data-apt="terrain" value="Turf" checked> Turf</label>
             <label class="apt-cb"><input type="checkbox" data-apt="terrain" value="Dirt"> Dirt</label>
           </div>
-          <button id="btn-clear" class="btn btn-secondary">Clear All</button>
+          <button id="btn-clear" class="btn btn-secondary">Clear</button>
           <button id="btn-experimental" class="btn btn-secondary">Experimental ▸</button>
         </div>
       </div>
@@ -54,6 +54,10 @@
           <span class="experimental-label">Save to browser</span>
           <span class="help-wrapper"><span class="help-icon">?</span><span class="warn-tooltip help-tooltip">Saves your current schedule to browser storage. It will be restored on your next visit instead of the default.</span></span>
           <input type="checkbox" id="persist-toggle" class="persist-cb">
+
+          <span class="experimental-label">Show crucial races</span>
+          <span class="help-wrapper"><span class="help-icon">?</span><span class="warn-tooltip help-tooltip">Highlights races that cannot be skipped without losing an earned epithet.</span></span>
+          <input type="checkbox" id="crucial-toggle" class="persist-cb">
         </div>
       </div>
 

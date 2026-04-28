@@ -64,22 +64,23 @@ const EpithetEngine = (() => {
   function slotLabel(race) {
     if (!race) return "";
     const h = race.half === 1 ? "Early" : "Late";
-    const yearLabel = { 1: "Jr", 2: "Cl", 3: "Sr" }[race.year] || "";
-    return `${yearLabel} ${h} ${Data.MONTH_NAMES[race.month]}`;
+    const yearLabel = { 1: "Junior", 2: "Classic", 3: "Senior" }[race.year] || "";
+    return `${yearLabel} - ${h} ${Data.MONTH_NAMES[race.month]}`;
   }
 
   function buildResult(ep, details, extraDetails) {
     const met = details.filter(d => d.status === "done").length;
     const total = details.length;
-    const hasSkipped = details.some(d => d.status === "skipped");
+    const skippedCount = details.filter(d => d.status === "skipped").length;
     const hasPartial = details.some(d => d.status === "partial");
 
     let status;
     if (met === total) {
       status = "earned";
-    } else if (hasSkipped) {
+    } else if (skippedCount > 0 && met + skippedCount === total) {
+      // Unskipping all would earn the epithet
       status = "at-risk";
-    } else if (met > 0 || hasPartial) {
+    } else if (met > 0 || hasPartial || skippedCount > 0) {
       status = "partial";
     } else {
       status = "unearned";
@@ -189,10 +190,13 @@ const EpithetEngine = (() => {
   function evalTerrainCount(ep, selected, skipped) {
     const count = selected.filter(r => r.terrain === ep.terrain).length;
     const skippedCount = skipped.filter(r => r.terrain === ep.terrain).length;
+    const wouldReachIfUnskipped = count + skippedCount >= ep.required_count;
     const details = [{
       label: `${count}/${ep.required_count} ${ep.terrain} races`,
       slot: "",
-      status: count >= ep.required_count ? "done" : skippedCount > 0 ? "skipped" : count > 0 ? "partial" : "missing",
+      status: count >= ep.required_count ? "done"
+        : (skippedCount > 0 && wouldReachIfUnskipped) ? "skipped"
+        : count > 0 ? "partial" : "missing",
     }];
     return buildResult(ep, details);
   }
@@ -200,63 +204,89 @@ const EpithetEngine = (() => {
   function evalTerrainGradeCount(ep, selected, skipped) {
     const count = selected.filter(r => r.terrain === ep.terrain && r.grade === ep.grade).length;
     const skippedCount = skipped.filter(r => r.terrain === ep.terrain && r.grade === ep.grade).length;
+    const wouldReachIfUnskipped = count + skippedCount >= ep.required_count;
     const details = [{
       label: `${count}/${ep.required_count} ${ep.terrain} ${ep.grade} races`,
       slot: "",
-      status: count >= ep.required_count ? "done" : skippedCount > 0 ? "skipped" : count > 0 ? "partial" : "missing",
+      status: count >= ep.required_count ? "done"
+        : (skippedCount > 0 && wouldReachIfUnskipped) ? "skipped"
+        : count > 0 ? "partial" : "missing",
     }];
     return buildResult(ep, details);
   }
 
   function evalGradeCount(ep, selected, skipped) {
     const minRank = GRADE_RANK[ep.min_grade] || 99;
-    const count = selected.filter(r => (GRADE_RANK[r.grade] || 99) <= minRank).length;
+    const predicate = r => (GRADE_RANK[r.grade] || 99) <= minRank;
+    const count = selected.filter(predicate).length;
+    const skippedCount = skipped.filter(predicate).length;
+    const wouldReachIfUnskipped = count + skippedCount >= ep.required_count;
     const details = [{
       label: `${count}/${ep.required_count} races at ${ep.min_grade} or above`,
       slot: "",
-      status: count >= ep.required_count ? "done" : count > 0 ? "partial" : "missing",
+      status: count >= ep.required_count ? "done"
+        : (skippedCount > 0 && wouldReachIfUnskipped) ? "skipped"
+        : count > 0 ? "partial" : "missing",
     }];
     return buildResult(ep, details);
   }
 
   function evalDistanceTypeCount(ep, selected, skipped) {
     const isStandard = ep.distance_type === "standard";
-    const count = selected.filter(r =>
-      isStandard ? STANDARD_DISTANCES.has(r.distance) : !STANDARD_DISTANCES.has(r.distance)
-    ).length;
+    const predicate = r =>
+      isStandard ? STANDARD_DISTANCES.has(r.distance) : !STANDARD_DISTANCES.has(r.distance);
+    const count = selected.filter(predicate).length;
+    const skippedCount = skipped.filter(predicate).length;
+    const wouldReachIfUnskipped = count + skippedCount >= ep.required_count;
     const details = [{
       label: `${count}/${ep.required_count} ${ep.distance_type} distance races`,
       slot: "",
-      status: count >= ep.required_count ? "done" : count > 0 ? "partial" : "missing",
+      status: count >= ep.required_count ? "done"
+        : (skippedCount > 0 && wouldReachIfUnskipped) ? "skipped"
+        : count > 0 ? "partial" : "missing",
     }];
     return buildResult(ep, details);
   }
 
   function evalRegionCount(ep, selected, skipped) {
     const trackSet = new Set(ep.tracks);
-    const count = selected.filter(r => trackSet.has(r.track)).length;
+    const predicate = r => trackSet.has(r.track);
+    const count = selected.filter(predicate).length;
+    const skippedCount = skipped.filter(predicate).length;
+    const wouldReachIfUnskipped = count + skippedCount >= ep.required_count;
     const details = [{
       label: `${count}/${ep.required_count} races in ${ep.region} (${ep.tracks.join(", ")})`,
       slot: "",
-      status: count >= ep.required_count ? "done" : count > 0 ? "partial" : "missing",
+      status: count >= ep.required_count ? "done"
+        : (skippedCount > 0 && wouldReachIfUnskipped) ? "skipped"
+        : count > 0 ? "partial" : "missing",
     }];
     return buildResult(ep, details);
   }
 
   function evalNamePatternCount(ep, selected, skipped) {
-    let count;
+    let predicate;
+    let descriptor;
     if (ep.pattern) {
-      count = selected.filter(r => r.name.includes(ep.pattern)).length;
+      predicate = r => r.name.includes(ep.pattern);
+      descriptor = `races with "${ep.pattern}" in the name`;
     } else if (ep.pattern_type === "country_in_name") {
       const countries = ["American", "Argentine", "Brazil", "Copa Republica", "New Zealand", "Saudi Arabia"];
-      count = selected.filter(r => countries.some(c => r.name.includes(c))).length;
+      predicate = r => countries.some(c => r.name.includes(c));
+      descriptor = "races with a country name";
     } else {
-      count = 0;
+      predicate = () => false;
+      descriptor = "matching races";
     }
+    const count = selected.filter(predicate).length;
+    const skippedCount = skipped.filter(predicate).length;
+    const wouldReachIfUnskipped = count + skippedCount >= ep.required_count;
     const details = [{
-      label: `${count}/${ep.required_count} matching races`,
+      label: `${count}/${ep.required_count} ${descriptor}`,
       slot: "",
-      status: count >= ep.required_count ? "done" : count > 0 ? "partial" : "missing",
+      status: count >= ep.required_count ? "done"
+        : (skippedCount > 0 && wouldReachIfUnskipped) ? "skipped"
+        : count > 0 ? "partial" : "missing",
     }];
     return buildResult(ep, details);
   }
